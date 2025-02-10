@@ -1,4 +1,3 @@
-import 'package:daytok/constants/constants.dart';
 import 'package:daytok/entities/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,11 +12,12 @@ class Article extends StatelessWidget {
   final WikipediaArticleEntity article;
 
   void _shareUrl(BuildContext context) async {
-    if (AppPlatform.isWeb) {
-      final messenger = ScaffoldMessenger.of(context);
+    final messenger = ScaffoldMessenger.of(context);
 
+    try {
+      Share.shareUri(Uri.parse(article.fullurl));
+    } catch (e) {
       await Clipboard.setData(ClipboardData(text: article.fullurl));
-
       messenger.showSnackBar(
         const SnackBar(
           margin: EdgeInsets.all(16),
@@ -25,8 +25,6 @@ class Article extends StatelessWidget {
           content: Text('Скопировано в буфер обмена'),
         ),
       );
-    } else {
-      Share.shareUri(Uri.parse(article.fullurl));
     }
   }
 
@@ -35,26 +33,27 @@ class Article extends StatelessWidget {
     final theme = Theme.of(context).textTheme;
     final thumbnail = article.thumbnail;
 
-    return Stack(
-      children: <Widget>[
-        Positioned.fill(
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.black,
-                image: thumbnail != null
-                    ? DecorationImage(
-                        image: NetworkImage(thumbnail),
-                        fit: BoxFit.cover,
-                      )
-                    : null),
-            child: Container(
-              color: Colors.black.withOpacity(0.6),
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 76),
-              child: DefaultTextStyle(
-                style: theme.bodyMedium!.copyWith(color: Colors.white),
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.black,
+          image: thumbnail != null
+              ? DecorationImage(
+                  image: NetworkImage(thumbnail),
+                  fit: BoxFit.cover,
+                )
+              : null),
+      child: Container(
+        color: Colors.black.withOpacity(0.8),
+        padding: const EdgeInsets.only(left: 16, bottom: 16, right: 6),
+        child: DefaultTextStyle(
+          style: theme.bodyMedium!.copyWith(color: Colors.white),
+          child: Row(
+            children: [
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
                       article.title,
@@ -63,28 +62,36 @@ class Article extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      article.extract,
+                      article.extract.trim(),
+                      style: theme.bodyMedium!.copyWith(color: Colors.white),
                       maxLines: 12,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
-            ),
+              const SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(3.1416),
+                    child: IconButton(
+                      onPressed: () => _shareUrl(context),
+                      icon: const Icon(
+                        Icons.reply,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
         ),
-        Positioned(
-          top: 16,
-          right: 16,
-          child: IconButton(
-            onPressed: () => _shareUrl(context),
-            icon: const Icon(
-              Icons.share,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

@@ -32297,7 +32297,7 @@ return new A.uc(A.a7u(new A.hH(B.uV,A.N0(new A.pX(new A.a2h(this),s,s,s,t.xx),s,
 A.a2h.prototype={
 $2(a,b){var s=b.b,r=s.length,q=this.a.d
 q===$&&A.b()
-return new A.m4(B.f.eL(r,1,17976931348623157e292),new A.a2g(r===0,s),0.2,2000,B.y0,q,null)},
+return new A.m4(B.f.eL(r,1,17976931348623157e292),new A.a2g(r===0,s),0.05,2000,B.y0,q,null)},
 $S:266}
 A.a2g.prototype={
 $2(a,b){if(this.a)return B.uJ
@@ -59895,7 +59895,7 @@ B.M=new A.yG(1,"solid")
 B.uS=new A.q_(null,null,null,null,null,null,null)
 B.uT=new A.q0(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.uU=new A.q1(null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.uV=new A.an(0,1024,0,1/0)
+B.uV=new A.an(0,470,0,1/0)
 B.hJ=new A.an(1/0,1/0,1/0,1/0)
 B.uW=new A.yI(2,"cover")
 B.uX=new A.yI(6,"scaleDown")

@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1024),
+          constraints: const BoxConstraints(maxWidth: 470),
           child: Container(
             height: double.infinity,
             decoration: BoxDecoration(
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return TikTokStyleFullPageScroller(
                   controller: _controller,
                   contentSize: contentSize.clamp(1, double.maxFinite.toInt()),
-                  swipePositionThreshold: 0.2,
+                  swipePositionThreshold: 0.05,
                   swipeVelocityThreshold: 2000,
                   animationDuration: const Duration(milliseconds: 400),
                   builder: (BuildContext context, int index) {
